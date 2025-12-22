@@ -1,0 +1,6 @@
+/* Usa-se ":root" para definir variáveis globais, acessíveis em qualquer lugar da página, como:
+ paleta de cores, tipografia base, espaçamentos padrão.
+*/
+:root {
+  --primary-color: green;
+}

@@ -1,0 +1,41 @@
+# Pastas de dependências e build
+# Ignora a pasta node_modules, que contém dependências instaladas e não deve ser formatada.
+node_modules
+# Ignora a pasta dist, normalmente saída de build/empacotamento do projeto.
+dist
+# Ignora a pasta build, também usada como saída de processos de build.
+build
+# Ignora a pasta coverage, gerada por ferramentas de cobertura de testes (ex.: Jest).
+coverage
+
+# Frameworks (Next.js, Nuxt, etc)
+# Ignora a pasta .next, gerada automaticamente por projetos Next.js (build, cache, etc.).
+.next
+# Ignora a pasta .nuxt, gerada automaticamente por projetos Nuxt (build, cache, etc.).
+.nuxt
+# Ignora a pasta .out, geralmente usada como saída exportada de aplicações (ex.: next export).
+.out
+# Ignora a pasta .cache, usada por diversas ferramentas para cache de build/empacotamento.
+.cache
+
+# Arquivos de lock (gerados automaticamente)
+# Ignora o arquivo package-lock.json, lockfile gerado pelo npm para fixar versões de dependências.
+package-lock.json
+# Ignora o arquivo yarn.lock, lockfile gerado pelo Yarn.
+yarn.lock
+# Ignora o arquivo pnpm-lock.yaml, lockfile gerado pelo pnpm.
+pnpm-lock.yaml
+
+# Configurações de ambiente e logs
+# Ignora o arquivo .env, que contém variáveis de ambiente sensíveis e específicas de ambiente.
+.env
+# Ignora qualquer arquivo que siga o padrão .env.*, como .env.local, .env.development, etc.
+.env.*
+# Ignora todos os arquivos de log (*.log), que são arquivos gerados em runtime.
+*.log
+
+# Pastas de IDEs
+# Ignora a pasta .vscode, que guarda configurações locais do Visual Studio Code.
+.vscode
+# Ignora a pasta .idea, usada por IDEs JetBrains (WebStorm, IntelliJ, etc.).
+.idea

@@ -1,0 +1,23 @@
+# 1. Detecção automática e normalização
+* text=auto
+
+# 2. Especificação de ficheiros de texto (Geral)
+*.js text
+*.ts text
+*.json text
+*.html text
+*.css text
+*.md text
+
+# 3. Reforço para ficheiros de configuração e VS Code (Garante CRLF no Windows)
+*.config.js text
+*.config.ts text
+*.app.json text
+*.node.json text
+.vscode/*.json text
+
+# 4. Ficheiros Binários
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary

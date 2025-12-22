@@ -1,24 +1,82 @@
 # Logs
+# Ignora a pasta "logs", usada para armazenar arquivos de log da aplicação.
 logs
+# Ignora qualquer arquivo com extensão .log (ex.: error.log, app.log).
 *.log
+# Ignora arquivos de log gerados pelo npm durante depuração.
 npm-debug.log*
+# Ignora arquivos de log de depuração gerados pelo Yarn.
 yarn-debug.log*
+# Ignora arquivos de log de erro gerados pelo Yarn.
 yarn-error.log*
+# Ignora arquivos de log de depuração gerados pelo pnpm.
 pnpm-debug.log*
+# Ignora arquivos de log de depuração gerados pelo Lerna (monorepos JS).
 lerna-debug.log*
 
+# Dependencies / Build artifacts
+# Ignora a pasta "node_modules", onde ficam dependências instaladas via npm/yarn/pnpm.
 node_modules
+# Ignora a pasta "dist", normalmente usada para arquivos de build/produção.
 dist
+# Ignora a pasta "dist-ssr", geralmente saída de builds Server-Side Rendering (SSR).
 dist-ssr
+
+# Local config / Environment secrets
+# Ignora arquivos com extensão .local, normalmente usados para configs locais e sensíveis.
 *.local
+# Ignora o arquivo .env, que armazena variáveis de ambiente (credenciais, segredos etc.).
+.env
 
 # Editor directories and files
-.vscode/*
+# Ignora a pasta .vscode, que contém configurações locais do Visual Studio Code.
+.vscode
+# EXCEÇÃO: garante que o arquivo .vscode/extensions.json seja versionado,
+# mesmo que o restante da pasta .vscode esteja ignorado.
 !.vscode/extensions.json
+# Ignora a pasta .idea, usada por IDEs JetBrains (WebStorm, IntelliJ, etc.).
 .idea
+# Ignora o arquivo .DS_Store, criado automaticamente pelo macOS em diretórios.
 .DS_Store
+# Ignora arquivos .suo (solution user options) usados por Visual Studio.
 *.suo
+# Ignora arquivos *.ntvs* relacionados a projetos Node Tools for Visual Studio.
 *.ntvs*
+# Ignora arquivos de projeto do Node.js para Visual Studio (.njsproj).
 *.njsproj
+# Ignora arquivos de solução do Visual Studio (.sln) específicos de ambiente.
 *.sln
+# Ignora arquivos temporários de swap criados por editores (ex.: Vim) com padrão .sw?.
 *.sw?
+
+# --- Adições de Nível Expert (Consolidado) ---
+
+# Testing and Coverage
+# Ignora a pasta "coverage", gerada por ferramentas de teste como Jest para relatórios de cobertura. [cite: 1]
+coverage/
+# Ignora arquivos de relatório de cobertura de código no formato LCOV. [cite: 1]
+*.lcov
+
+# Caches and Quality Tools
+# Ignora o cache do ESLint, que acelera a análise mas não deve ser compartilhado. [cite: 1]
+.eslintcache
+# Ignora o cache do Stylelint (ferramenta de linting para CSS/Sass). [cite: 1]
+.stylelintcache
+# Ignora pastas de cache genéricas usadas por diversos frameworks e bibliotecas. [cite: 1]
+.cache/
+
+# TypeScript Specific
+# Ignora metadados de compilação incremental do TypeScript para builds mais rápidos. [cite: 1]
+*.tsbuildinfo
+
+# OS Metadata (System Files)
+# Ignora o arquivo de cache de miniaturas do Windows (ícones e imagens). [cite: 1, 3]
+Thumbs.db
+# Ignora o banco de dados de miniaturas de fotos específico do Windows Media Center. [cite: 1, 3]
+ehthumbs.db
+
+# Automated Testing Artifacts (Cypress/E2E)
+# Ignora capturas de tela capturadas automaticamente durante falhas em testes de interface. [cite: 1]
+cypress/screenshots/
+# Ignora gravações de vídeo das execuções de testes automatizados. [cite: 1]
+cypress/videos/

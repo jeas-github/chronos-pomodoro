@@ -1,73 +1,106 @@
-# React + TypeScript + Vite
+# Chronos Pomodoro
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação de gerenciamento de tempo utilizando a técnica Pomodoro, focada em
+produtividade e qualidade de código.
 
-Currently, two official plugins are available:
+## 🛠️ Tecnologias Utilizadas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+O projeto foi construído utilizando as seguintes tecnologias e ferramentas:
 
-## React Compiler
+### Core (Núcleo)
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+- **React 19**: Biblioteca principal para construção da interface de usuário.
+- **Vite 7**: Ferramenta de build de próxima geração, oferecendo um ambiente de
+  desenvolvimento ultra-rápido.
+- **TypeScript**: Adiciona tipagem estática ao JavaScript, garantindo maior
+  segurança no desenvolvimento.
 
-## Expanding the ESLint configuration
+### Qualidade de Código e Estilo
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **ESLint 9**: Ferramenta de análise estática para identificar e corrigir
+  problemas de código.
+- **Prettier 3**: Formatador de código que garante um estilo visual consistente.
+- **typescript-eslint**: Regras específicas do ESLint para TypeScript.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Automação e Padronização
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Husky 8**: Gerenciador de Git Hooks para automatizar verificações.
+- **lint-staged 16**: Executa linting e formatação apenas nos arquivos
+  modificados no stage.
+- **Commitlint 20**: Valida se as mensagens de commit seguem o padrão
+  _Conventional Commits_.
+- **eslint-config-prettier**: Garante a compatibilidade entre ESLint e Prettier.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## 🚀 Instalação e Execução
+
+Siga as instruções abaixo para configurar o ambiente de desenvolvimento
+localmente.
+
+### 1. Pré-requisitos
+
+Certifique-se de ter instalado:
+
+- **Node.js** (Versão 18 ou superior recomendada)
+- **NPM** (Gerenciador de pacotes)
+
+### 2. Clonar o Repositório
+
+```bash
+git clone [https://github.com/seu-usuario/chronos-pomodoro.git](https://github.com/seu-usuario/chronos-pomodoro.git)
+cd chronos-pomodoro
+
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 3. Instalar Dependências
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Este passo ativa automaticamente o **Husky** através do script `prepare`:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+
 ```
+
+### 4. Executar o Projeto
+
+Para iniciar o servidor de desenvolvimento:
+
+```bash
+npm run dev
+
+```
+
+---
+
+## 🤝 Guia de Contribuição
+
+Para manter a qualidade do código, siga os padrões definidos abaixo:
+
+### Desenvolvimento e Qualidade
+
+Antes de enviar suas alterações, você pode validar o código manualmente:
+
+- **Verificar erros:** `npm run lint`
+- **Corrigir automaticamente:** `npm run lint:fix`
+- **Validar conflitos Prettier:** `npm run lint:all`
+
+### Padrão de Commits
+
+Este projeto utiliza **Conventional Commits**. O commit será rejeitado se não
+seguir a estrutura `<tipo>: <descrição>`.
+
+**Tipos comuns:**
+
+- `feat`: Nova funcionalidade.
+- `fix`: Correção de bug.
+- `docs`: Alteração em documentação.
+- `style`: Formatação e estilo.
+- `chore`: Atualização de tarefas ou dependências.
+
+---
+
+## 📄 Comandos Úteis
+
+- **Gerar Build:** `npm run build`
+- **Testar Build:** `npm run preview`
