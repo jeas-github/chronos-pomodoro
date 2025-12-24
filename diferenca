@@ -1,0 +1,352 @@
+diff --git a/.editorconfig b/.editorconfig
+new file mode 100644
+index 0000000..9fff66f
+--- /dev/null
++++ b/.editorconfig
+@@ -0,0 +1,19 @@
++# Indica que este é o arquivo de configuração raiz para este projeto
++root = true
++
++# Configurações para todos os arquivos (*)
++[*]
++end_of_line = crlf
++charset = utf-8
++indent_style = space
++indent_size = 2
++trim_trailing_whitespace = true
++insert_final_newline = true
++
++# Você pode especificar exceções se necessário
++[*.sh]
++end_of_line = lf
++
++[{pre-commit,commit-msg}]
++end_of_line = lf
++
+diff --git a/.gitattributes b/.gitattributes
+index 3034887..ace40d3 100644
+--- a/.gitattributes
++++ b/.gitattributes
+@@ -1,7 +1,8 @@
+ # 1. Detecção automática e normalização
++# Trata arquivos como texto; normalização/checkout seguem core.autocrlf (exceto regras eol=...)
+ * text=auto
+ 
+-# 2. Especificação de ficheiros de texto (Geral)
++# 2. Especificação de arquivos de texto (Geral)
+ *.js text
+ *.ts text
+ *.json text
+@@ -9,15 +10,19 @@
+ *.css text
+ *.md text
+ 
+-# 3. Reforço para ficheiros de configuração e VS Code (Garante CRLF no Windows)
++# 3. Reforço para arquivos de configuração e VS Code (texto; EOL fica por padrão do autocrlf)
+ *.config.js text
+ *.config.ts text
+ *.app.json text
+ *.node.json text
+ .vscode/*.json text
+ 
+-# 4. Ficheiros Binários
++# 4. Arquivos Binários
+ *.png binary
+ *.jpg binary
+ *.gif binary
+-*.ico binary
+\ No newline at end of file
++*.ico binary
++
++# Hooks e scripts shell devem permanecer em LF (evita problemas no Windows)
++.husky/* text eol=lf
++*.sh text eol=lf
+diff --git a/.gitignore b/.gitignore
+index 6a94273..c2c4c8d 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -52,31 +52,33 @@ dist-ssr
+ # --- Adições de Nível Expert (Consolidado) ---
+ 
+ # Testing and Coverage
+-# Ignora a pasta "coverage", gerada por ferramentas de teste como Jest para relatórios de cobertura. [cite: 1]
++# Ignora a pasta "coverage", gerada por ferramentas de teste como Jest para relatórios de cobertura.
+ coverage/
+-# Ignora arquivos de relatório de cobertura de código no formato LCOV. [cite: 1]
++# Ignora arquivos de relatório de cobertura de código no formato LCOV.
+ *.lcov
+ 
+ # Caches and Quality Tools
+-# Ignora o cache do ESLint, que acelera a análise mas não deve ser compartilhado. [cite: 1]
++# Ignora o cache do ESLint, que acelera a análise mas não deve ser compartilhado.
+ .eslintcache
+-# Ignora o cache do Stylelint (ferramenta de linting para CSS/Sass). [cite: 1]
++# Ignora o cache do Stylelint (ferramenta de linting para CSS/Sass).
+ .stylelintcache
+-# Ignora pastas de cache genéricas usadas por diversos frameworks e bibliotecas. [cite: 1]
++# Ignora pastas de cache genéricas usadas por diversos frameworks e bibliotecas.
+ .cache/
+ 
+ # TypeScript Specific
+-# Ignora metadados de compilação incremental do TypeScript para builds mais rápidos. [cite: 1]
++# Ignora metadados de compilação incremental do TypeScript para builds mais rápidos.
+ *.tsbuildinfo
+ 
+ # OS Metadata (System Files)
+-# Ignora o arquivo de cache de miniaturas do Windows (ícones e imagens). [cite: 1, 3]
++# Ignora o arquivo de cache de miniaturas do Windows (ícones e imagens).
+ Thumbs.db
+-# Ignora o banco de dados de miniaturas de fotos específico do Windows Media Center. [cite: 1, 3]
++# Ignora o banco de dados de miniaturas de fotos específico do Windows Media Center.
+ ehthumbs.db
+ 
+ # Automated Testing Artifacts (Cypress/E2E)
+-# Ignora capturas de tela capturadas automaticamente durante falhas em testes de interface. [cite: 1]
++# Ignora capturas de tela capturadas automaticamente durante falhas em testes de interface.
+ cypress/screenshots/
+-# Ignora gravações de vídeo das execuções de testes automatizados. [cite: 1]
+-cypress/videos/
+\ No newline at end of file
++# Ignora gravações de vídeo das execuções de testes automatizados.
++cypress/videos/
++
++configuracao.txt
+diff --git a/.husky/_/.gitignore b/.husky/_/.gitignore
+new file mode 100644
+index 0000000..614400c
+--- /dev/null
++++ b/.husky/_/.gitignore
+@@ -0,0 +1,3 @@
++*
++!.gitignore
++!husky.sh
+diff --git a/.husky/_/husky.sh b/.husky/_/husky.sh
+new file mode 100644
+index 0000000..cec959a
+--- /dev/null
++++ b/.husky/_/husky.sh
+@@ -0,0 +1,36 @@
++#!/usr/bin/env sh
++if [ -z "$husky_skip_init" ]; then
++  debug () {
++    if [ "$HUSKY_DEBUG" = "1" ]; then
++      echo "husky (debug) - $1"
++    fi
++  }
++
++  readonly hook_name="$(basename -- "$0")"
++  debug "starting $hook_name..."
++
++  if [ "$HUSKY" = "0" ]; then
++    debug "HUSKY env variable is set to 0, skipping hook"
++    exit 0
++  fi
++
++  if [ -f ~/.huskyrc ]; then
++    debug "sourcing ~/.huskyrc"
++    . ~/.huskyrc
++  fi
++
++  readonly husky_skip_init=1
++  export husky_skip_init
++  sh -e "$0" "$@"
++  exitCode="$?"
++
++  if [ $exitCode != 0 ]; then
++    echo "husky - $hook_name hook exited with code $exitCode (error)"
++  fi
++
++  if [ $exitCode = 127 ]; then
++    echo "husky - command not found in PATH=$PATH"
++  fi
++
++  exit $exitCode
++fi
+diff --git a/.husky/commit-msg b/.husky/commit-msg
+index c160a77..80416c7 100644
+--- a/.husky/commit-msg
++++ b/.husky/commit-msg
+@@ -1,4 +1,4 @@
+ #!/usr/bin/env sh
+ . "$(dirname -- "$0")/_/husky.sh"
+ 
+-npx --no -- commitlint --edit ${1}
++npx --no-install commitlint --edit "$1"
+diff --git a/.husky/pre-commit b/.husky/pre-commit
+index 0312b76..cf0c46b 100644
+--- a/.husky/pre-commit
++++ b/.husky/pre-commit
+@@ -1,4 +1,4 @@
+ #!/usr/bin/env sh
+ . "$(dirname -- "$0")/_/husky.sh"
+ 
+-npx lint-staged
+\ No newline at end of file
++npx --no-install lint-staged
+diff --git a/.prettierrc.json b/.prettierrc.json
+index c1ba99a..d854ab0 100644
+--- a/.prettierrc.json
++++ b/.prettierrc.json
+@@ -13,7 +13,7 @@
+   "jsxSingleQuote": true,
+   "bracketSameLine": false,
+ 
+-  "proseWrap": "always",
++  "proseWrap": "preserve",
+   "htmlWhitespaceSensitivity": "css",
+ 
+   "requirePragma": false,
+diff --git a/configuracao.txt b/configuracao.txt
+deleted file mode 100644
+index 8301c08..0000000
+--- a/configuracao.txt
++++ /dev/null
+@@ -1,34 +0,0 @@
+-system	file:C:/Program Files/Git/etc/gitconfig	diff.astextplain.textconv=astextplain
+-system	file:C:/Program Files/Git/etc/gitconfig	filter.lfs.clean=git-lfs clean -- %f
+-system	file:C:/Program Files/Git/etc/gitconfig	filter.lfs.smudge=git-lfs smudge -- %f
+-system	file:C:/Program Files/Git/etc/gitconfig	filter.lfs.process=git-lfs filter-process
+-system	file:C:/Program Files/Git/etc/gitconfig	filter.lfs.required=true
+-system	file:C:/Program Files/Git/etc/gitconfig	http.sslbackend=schannel
+-system	file:C:/Program Files/Git/etc/gitconfig	core.autocrlf=true
+-system	file:C:/Program Files/Git/etc/gitconfig	core.fscache=true
+-system	file:C:/Program Files/Git/etc/gitconfig	core.symlinks=false
+-system	file:C:/Program Files/Git/etc/gitconfig	pull.rebase=false
+-system	file:C:/Program Files/Git/etc/gitconfig	credential.helper=manager
+-system	file:C:/Program Files/Git/etc/gitconfig	credential.https://dev.azure.com.usehttppath=true
+-system	file:C:/Program Files/Git/etc/gitconfig	init.defaultbranch=master
+-global	file:C:/Users/jeas/.gitconfig	core.editor=code --wait
+-global	file:C:/Users/jeas/.gitconfig	core.autocrlf=true
+-global	file:C:/Users/jeas/.gitconfig	core.safecrlf=false
+-global	file:C:/Users/jeas/.gitconfig	safe.directory=C:/Program Files/Git/var/www
+-global	file:C:/Users/jeas/.gitconfig	user.email=jeas@outlook.com
+-global	file:C:/Users/jeas/.gitconfig	user.name=Jorge Eduardo
+-global	file:C:/Users/jeas/.gitconfig	init.defaultbranch=main
+-global	file:C:/Users/jeas/.gitconfig	pull.rebase=true
+-local	file:.git/config	core.repositoryformatversion=0
+-local	file:.git/config	core.filemode=false
+-local	file:.git/config	core.bare=false
+-local	file:.git/config	core.logallrefupdates=true
+-local	file:.git/config	core.symlinks=false
+-local	file:.git/config	core.ignorecase=true
+-local	file:.git/config	core.hookspath=.husky
+-local	file:.git/config	remote.origin.url=git@github.com:jeas-github/chronos-pomodoro.git
+-local	file:.git/config	remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+-local	file:.git/config	branch.main.remote=origin
+-local	file:.git/config	branch.main.merge=refs/heads/main
+-local	file:.git/config	branch.main.gk-last-accessed=2025-12-22T19:01:59.168Z
+-local	file:.git/config	branch.main.gk-last-modified=2025-12-20T14:54:10.962Z
+diff --git a/eslint.config.js b/eslint.config.js
+index 5e6b472..a53e381 100644
+--- a/eslint.config.js
++++ b/eslint.config.js
+@@ -1,9 +1,9 @@
+-import js from '@eslint/js'
+-import globals from 'globals'
+-import reactHooks from 'eslint-plugin-react-hooks'
+-import reactRefresh from 'eslint-plugin-react-refresh'
+-import tseslint from 'typescript-eslint'
+-import { defineConfig, globalIgnores } from 'eslint/config'
++import js from '@eslint/js';
++import globals from 'globals';
++import reactHooks from 'eslint-plugin-react-hooks';
++import reactRefresh from 'eslint-plugin-react-refresh';
++import tseslint from 'typescript-eslint';
++import { defineConfig, globalIgnores } from 'eslint/config';
+ 
+ export default defineConfig([
+   globalIgnores(['dist']),
+@@ -20,4 +20,4 @@ export default defineConfig([
+       globals: globals.browser,
+     },
+   },
+-])
++]);
+diff --git a/package-lock.json b/package-lock.json
+index 3a181f6..de182e8 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -27,7 +27,7 @@
+         "husky": "^8.0.0",
+         "lint-staged": "^16.2.7",
+         "prettier": "^3.7.4",
+-        "typescript": "~5.9.3",
++        "typescript": "^5.9.3",
+         "typescript-eslint": "^8.46.4",
+         "vite": "^7.2.4"
+       }
+diff --git a/package.json b/package.json
+index 3421600..55fed5e 100644
+--- a/package.json
++++ b/package.json
+@@ -8,8 +8,8 @@
+     "build": "tsc -b && vite build",
+     "lint": "eslint .",
+     "lint:fix": "eslint . --fix",
++    "lint:check-prettier": "prettier --check \"src/**/*.{ts,tsx,js,jsx}\"",
+     "lint:all": "npm run lint && npm run lint:check-prettier",
+-    "lint:check-prettier": "eslint-config-prettier ./src",
+     "preview": "vite preview",
+     "prepare": "husky install"
+   },
+@@ -39,7 +39,7 @@
+     "husky": "^8.0.0",
+     "lint-staged": "^16.2.7",
+     "prettier": "^3.7.4",
+-    "typescript": "~5.9.3",
++    "typescript": "^5.9.3",
+     "typescript-eslint": "^8.46.4",
+     "vite": "^7.2.4"
+   }
+diff --git a/tsconfig.app.json b/tsconfig.app.json
+index a9b5a59..f59ccc4 100644
+--- a/tsconfig.app.json
++++ b/tsconfig.app.json
+@@ -1,5 +1,6 @@
+ {
+   "compilerOptions": {
++    "forceConsistentCasingInFileNames": true,
+     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+     "target": "ES2022",
+     "useDefineForClassFields": true,
+@@ -7,6 +8,7 @@
+     "module": "ESNext",
+     "types": ["vite/client"],
+     "skipLibCheck": true,
++    "composite": true,
+ 
+     /* Bundler mode */
+     "moduleResolution": "bundler",
+diff --git a/tsconfig.json b/tsconfig.json
+index 1ffef60..c6b7172 100644
+--- a/tsconfig.json
++++ b/tsconfig.json
+@@ -1,4 +1,8 @@
+ {
++  "compilerOptions": {
++    "forceConsistentCasingInFileNames": true,
++    "strict": true
++  },
+   "files": [],
+   "references": [
+     { "path": "./tsconfig.app.json" },
+diff --git a/tsconfig.node.json b/tsconfig.node.json
+index 8a67f62..49703da 100644
+--- a/tsconfig.node.json
++++ b/tsconfig.node.json
+@@ -1,11 +1,13 @@
+ {
+   "compilerOptions": {
+     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+-    "target": "ES2023",
+-    "lib": ["ES2023"],
++    "target": "ES2022",
++    "lib": ["ES2022.Array"],
++    "forceConsistentCasingInFileNames": true,
+     "module": "ESNext",
+     "types": ["node"],
+     "skipLibCheck": true,
++    "composite": true,
+ 
+     /* Bundler mode */
+     "moduleResolution": "bundler",

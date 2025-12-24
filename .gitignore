@@ -52,31 +52,33 @@ dist-ssr
 # --- Adições de Nível Expert (Consolidado) ---
 
 # Testing and Coverage
-# Ignora a pasta "coverage", gerada por ferramentas de teste como Jest para relatórios de cobertura. [cite: 1]
+# Ignora a pasta "coverage", gerada por ferramentas de teste como Jest para relatórios de cobertura.
 coverage/
-# Ignora arquivos de relatório de cobertura de código no formato LCOV. [cite: 1]
+# Ignora arquivos de relatório de cobertura de código no formato LCOV.
 *.lcov
 
 # Caches and Quality Tools
-# Ignora o cache do ESLint, que acelera a análise mas não deve ser compartilhado. [cite: 1]
+# Ignora o cache do ESLint, que acelera a análise mas não deve ser compartilhado.
 .eslintcache
-# Ignora o cache do Stylelint (ferramenta de linting para CSS/Sass). [cite: 1]
+# Ignora o cache do Stylelint (ferramenta de linting para CSS/Sass).
 .stylelintcache
-# Ignora pastas de cache genéricas usadas por diversos frameworks e bibliotecas. [cite: 1]
+# Ignora pastas de cache genéricas usadas por diversos frameworks e bibliotecas.
 .cache/
 
 # TypeScript Specific
-# Ignora metadados de compilação incremental do TypeScript para builds mais rápidos. [cite: 1]
+# Ignora metadados de compilação incremental do TypeScript para builds mais rápidos.
 *.tsbuildinfo
 
 # OS Metadata (System Files)
-# Ignora o arquivo de cache de miniaturas do Windows (ícones e imagens). [cite: 1, 3]
+# Ignora o arquivo de cache de miniaturas do Windows (ícones e imagens).
 Thumbs.db
-# Ignora o banco de dados de miniaturas de fotos específico do Windows Media Center. [cite: 1, 3]
+# Ignora o banco de dados de miniaturas de fotos específico do Windows Media Center.
 ehthumbs.db
 
 # Automated Testing Artifacts (Cypress/E2E)
-# Ignora capturas de tela capturadas automaticamente durante falhas em testes de interface. [cite: 1]
+# Ignora capturas de tela capturadas automaticamente durante falhas em testes de interface.
 cypress/screenshots/
-# Ignora gravações de vídeo das execuções de testes automatizados. [cite: 1]
+# Ignora gravações de vídeo das execuções de testes automatizados.
 cypress/videos/
+
+configuracao.txt

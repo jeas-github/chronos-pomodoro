@@ -3,19 +3,16 @@
   "semi": true,
   "quoteProps": "as-needed",
   "trailingComma": "all",
-
   "printWidth": 80,
   "tabWidth": 2,
   "useTabs": false,
-
   "arrowParens": "avoid",
   "bracketSpacing": true,
   "jsxSingleQuote": true,
   "bracketSameLine": false,
-
-  "proseWrap": "always",
+  "proseWrap": "preserve",
   "htmlWhitespaceSensitivity": "css",
-
   "requirePragma": false,
-  "insertPragma": false
+  "insertPragma": false,
+  "endOfLine": "lf"
 }

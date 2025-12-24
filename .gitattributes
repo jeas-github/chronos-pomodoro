@@ -1,7 +1,8 @@
 # 1. Detecção automática e normalização
-* text=auto
+# Trata arquivos como texto; normalização/checkout seguem core.autocrlf (exceto regras eol=...)
+* text=auto eol=lf
 
-# 2. Especificação de ficheiros de texto (Geral)
+# 2. Especificação de arquivos de texto (Geral)
 *.js text
 *.ts text
 *.json text
@@ -9,15 +10,19 @@
 *.css text
 *.md text
 
-# 3. Reforço para ficheiros de configuração e VS Code (Garante CRLF no Windows)
+# 3. Reforço para arquivos de configuração e VS Code (texto; EOL fica por padrão do autocrlf)
 *.config.js text
 *.config.ts text
 *.app.json text
 *.node.json text
 .vscode/*.json text
 
-# 4. Ficheiros Binários
+# 4. Arquivos Binários
 *.png binary
 *.jpg binary
 *.gif binary
 *.ico binary
+
+# Hooks e scripts shell devem permanecer em LF (evita problemas no Windows)
+.husky/* text eol=lf
+*.sh text eol=lf
