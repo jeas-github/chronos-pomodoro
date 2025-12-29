@@ -1,28 +1,33 @@
 # 1. Detecção automática e normalização
-# Trata arquivos como texto; normalização/checkout seguem core.autocrlf (exceto regras eol=...)
-* text=auto eol=lf
+# Permite que o Git converta para CRLF no Windows (conforto) e LF no GitHub (segurança)
+* text=auto
 
 # 2. Especificação de arquivos de texto (Geral)
 *.js text
 *.ts text
+*.tsx text
 *.json text
 *.html text
 *.css text
 *.md text
 
-# 3. Reforço para arquivos de configuração e VS Code (texto; EOL fica por padrão do autocrlf)
+# 3. Reforço para arquivos de configuração e VS Code
 *.config.js text
 *.config.ts text
 *.app.json text
 *.node.json text
 .vscode/*.json text
 
-# 4. Arquivos Binários
+# 4. Arquivos Binários (Não sofrem conversão)
 *.png binary
 *.jpg binary
 *.gif binary
 *.ico binary
 
-# Hooks e scripts shell devem permanecer em LF (evita problemas no Windows)
+# 5. REGRAS DE SEGURANÇA (BLOQUEIO DE LF)
+# Estes arquivos serão SEMPRE LF no repositório E no seu disco.
+# Isso garante que funcionem no Linux/Husky mesmo você estando no Windows.
 .husky/* text eol=lf
 *.sh text eol=lf
+Dockerfile text eol=lf
+docker-compose.yml text eol=lf

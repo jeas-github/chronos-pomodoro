@@ -1,19 +1,17 @@
-# Indica que este é o arquivo de configuração raiz para este projeto
 root = true
 
 # Configurações para todos os arquivos (*)
 [*]
-end_of_line = lf
+# Removido end_of_line para permitir CRLF no Windows
 charset = utf-8
 indent_style = space
 indent_size = 2
 trim_trailing_whitespace = true
 insert_final_newline = true
 
-# Você pode especificar exceções se necessário
+# Exceções que PRECISAM de LF (Scripts e Hooks)
 [*.sh]
 end_of_line = lf
 
 [{pre-commit,commit-msg}]
 end_of_line = lf
-
